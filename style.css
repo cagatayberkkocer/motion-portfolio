@@ -426,58 +426,6 @@ main > section {
   color: var(--accent);
 }
 
-/* Hero background blobs */
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  filter: blur(70px);
-  opacity: 0.5;
-  z-index: 0;
-}
-
-.hero__inner { position: relative; z-index: 1; }
-
-.hero__blob {
-  position: absolute;
-  width: 44vmin;
-  height: 44vmin;
-  border-radius: 50%;
-  will-change: transform;
-}
-
-.hero__blob--1 {
-  background: radial-gradient(circle at 30% 30%, var(--accent), transparent 60%);
-  top: -10vmin;
-  left: 5vmin;
-  animation: floatA 18s ease-in-out infinite;
-}
-.hero__blob--2 {
-  background: radial-gradient(circle at 70% 40%, var(--accent-2), transparent 60%);
-  top: 20vmin;
-  right: -6vmin;
-  animation: floatB 22s ease-in-out infinite;
-}
-.hero__blob--3 {
-  background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 60%);
-  bottom: -12vmin;
-  left: 40%;
-  width: 30vmin;
-  height: 30vmin;
-  opacity: 0.7;
-  animation: floatA 26s ease-in-out infinite reverse;
-}
-
-@keyframes floatA {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(6vmin, 4vmin) scale(1.1); }
-}
-@keyframes floatB {
-  0%, 100% { transform: translate(0, 0) scale(1.1); }
-  50% { transform: translate(-5vmin, 3vmin) scale(0.95); }
-}
-
 /* ---------- 8. Marquee ---------- */
 .marquee {
   padding-block: 2rem !important;
@@ -1015,7 +963,6 @@ main > section {
     scroll-behavior: auto !important;
   }
   .marquee__track { transform: none !important; }
-  .hero__blob { animation: none !important; }
   .cursor, .cursor-dot { display: none; }
   body { cursor: auto; }
 }
