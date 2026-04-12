@@ -187,44 +187,31 @@ main > section {
     transparent 0, black 20vh, black calc(100% - 20vh), transparent 100%);
 }
 
-/* ---------- 5. Cursor ---------- */
+/* ---------- 5. Cursor + trail ---------- */
 .cursor,
-.cursor-dot {
+.cursor-echo {
   position: fixed;
   top: 0;
   left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
   pointer-events: none;
-  z-index: 9999;
-  border-radius: 999px;
   mix-blend-mode: difference;
   will-change: transform;
 }
 
 .cursor {
-  width: 36px;
-  height: 36px;
-  border: 1px solid #fff;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out),
-    background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+  z-index: 10000;
 }
 
-.cursor-dot {
-  width: 5px;
-  height: 5px;
-  background: #fff;
-  transform: translate(-50%, -50%);
-}
-
-.cursor.is-hover {
-  width: 72px;
-  height: 72px;
-  background: rgba(255, 255, 255, 0.15);
-  border-color: transparent;
+.cursor-echo {
+  z-index: 9999;
 }
 
 @media (hover: none), (pointer: coarse) {
-  .cursor, .cursor-dot { display: none; }
+  .cursor, .cursor-echo { display: none; }
 }
 
 /* ---------- 6. Nav ---------- */
@@ -963,6 +950,6 @@ main > section {
     scroll-behavior: auto !important;
   }
   .marquee__track { transform: none !important; }
-  .cursor, .cursor-dot { display: none; }
+  .cursor, .cursor-echo { display: none; }
   body { cursor: auto; }
 }
