@@ -40,8 +40,12 @@ body {
   font-size: clamp(16px, 0.6vw + 14px, 19px);
   line-height: 1.5;
   overflow-x: clip;
+  cursor: none;
 }
 
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+}
 
 img,
 svg,
@@ -180,6 +184,25 @@ main > section {
     transparent 0, black 20vh, black calc(100% - 20vh), transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom,
     transparent 0, black 20vh, black calc(100% - 20vh), transparent 100%);
+}
+
+/* ---------- 5. Cursor ---------- */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
 }
 
 /* ---------- 6. Nav ---------- */

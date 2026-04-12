@@ -165,6 +165,21 @@ function renderProjects() {
 
 /* ---------- Animations ---------- */
 
+function initCursor() {
+  const cursor = document.querySelector(".cursor");
+  if (!cursor) return;
+
+  gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+  const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3" });
+  const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3" });
+
+  window.addEventListener("mousemove", (e) => {
+    xTo(e.clientX);
+    yTo(e.clientY);
+  });
+}
+
 function initNav() {
   document.querySelectorAll("[data-nav]").forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -556,6 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Desktop-only enhancements
   mm.add("(hover: hover) and (pointer: fine)", () => {
+    initCursor();
     initMagneticLinks();
   });
 
