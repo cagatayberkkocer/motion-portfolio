@@ -5,8 +5,7 @@
      2. Custom properties
      3. Typography
      4. Layout primitives
-     5. Cursor
-     6. Nav
+     5. Nav
      7. Hero
      8. Marquee
      9. About
@@ -41,12 +40,8 @@ body {
   font-size: clamp(16px, 0.6vw + 14px, 19px);
   line-height: 1.5;
   overflow-x: clip;
-  cursor: none; /* hidden in favour of custom cursor on desktop */
 }
 
-@media (hover: none), (pointer: coarse) {
-  body { cursor: auto; }
-}
 
 img,
 svg,
@@ -185,33 +180,6 @@ main > section {
     transparent 0, black 20vh, black calc(100% - 20vh), transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom,
     transparent 0, black 20vh, black calc(100% - 20vh), transparent 100%);
-}
-
-/* ---------- 5. Cursor + trail ---------- */
-.cursor,
-.cursor-echo {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  will-change: transform;
-}
-
-.cursor {
-  z-index: 10000;
-}
-
-.cursor-echo {
-  z-index: 9999;
-}
-
-@media (hover: none), (pointer: coarse) {
-  .cursor, .cursor-echo { display: none; }
 }
 
 /* ---------- 6. Nav ---------- */
@@ -554,7 +522,6 @@ main > section {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  cursor: none;
 }
 
 /* asymmetric layout at tablet+ */
@@ -715,7 +682,6 @@ main > section {
   place-items: center;
   justify-self: center;
   color: var(--fg);
-  cursor: none;
 }
 
 .reel__play-text {
@@ -950,6 +916,4 @@ main > section {
     scroll-behavior: auto !important;
   }
   .marquee__track { transform: none !important; }
-  .cursor, .cursor-echo { display: none; }
-  body { cursor: auto; }
 }

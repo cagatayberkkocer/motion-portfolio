@@ -165,52 +165,6 @@ function renderProjects() {
 
 /* ---------- Animations ---------- */
 
-function initCursor() {
-  const cursor = document.querySelector(".cursor");
-  if (!cursor) return;
-
-  // Build trailing echoes — each lags a little more and picks up blur/fade,
-  // producing a choked, smooth trail behind the main dot.
-  const ECHO_COUNT = 10;
-  const echoes = [];
-  for (let i = 0; i < ECHO_COUNT; i++) {
-    const el = document.createElement("div");
-    el.className = "cursor-echo";
-    el.setAttribute("aria-hidden", "true");
-    const t = (i + 1) / ECHO_COUNT; // 0.1 → 1.0
-    el.style.filter = `blur(${0.5 + t * 5}px)`;
-    el.style.opacity = `${0.55 - t * 0.45}`;
-    document.body.appendChild(el);
-    echoes.push(el);
-  }
-
-  // Centre every element on the pointer via percentage offsets; GSAP's
-  // quickTo then animates raw x/y and composes them automatically.
-  gsap.set([cursor, ...echoes], { xPercent: -50, yPercent: -50 });
-
-  // Main cursor: very tight follow
-  const xTo = gsap.quickTo(cursor, "x", { duration: 0.08, ease: "power3" });
-  const yTo = gsap.quickTo(cursor, "y", { duration: 0.08, ease: "power3" });
-
-  // Echoes: progressively longer duration → natural lag-based trail
-  const echoTweens = echoes.map((el, i) => {
-    const d = 0.14 + i * 0.05; // 0.14s … 0.59s
-    return {
-      x: gsap.quickTo(el, "x", { duration: d, ease: "power3" }),
-      y: gsap.quickTo(el, "y", { duration: d, ease: "power3" }),
-    };
-  });
-
-  window.addEventListener("mousemove", (e) => {
-    xTo(e.clientX);
-    yTo(e.clientY);
-    for (const tw of echoTweens) {
-      tw.x(e.clientX);
-      tw.y(e.clientY);
-    }
-  });
-}
-
 function initNav() {
   document.querySelectorAll("[data-nav]").forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -602,7 +556,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Desktop-only enhancements
   mm.add("(hover: hover) and (pointer: fine)", () => {
-    initCursor();
     initMagneticLinks();
   });
 
