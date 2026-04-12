@@ -169,14 +169,48 @@ function initCursor() {
   const cursor = document.querySelector(".cursor");
   if (!cursor) return;
 
-  gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+  // 12 trailing echoes, each shrinking by 1.2× from the previous
+  const ECHO_COUNT = 12;
+  const BASE_SIZE = 12; // px — matches main cursor
+  const echoes = [];
+
+  for (let i = 0; i < ECHO_COUNT; i++) {
+    const el = document.createElement("div");
+    el.className = "cursor-echo";
+    el.setAttribute("aria-hidden", "true");
+
+    const size = BASE_SIZE / Math.pow(1.2, i + 1);
+    el.style.width = size + "px";
+    el.style.height = size + "px";
+
+    const t = (i + 1) / ECHO_COUNT;
+    el.style.opacity = 0.6 - t * 0.5;
+    el.style.filter = `blur(${t * 4}px)`;
+
+    document.body.appendChild(el);
+    echoes.push(el);
+  }
+
+  gsap.set([cursor, ...echoes], { xPercent: -50, yPercent: -50 });
 
   const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3" });
   const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3" });
 
+  const echoTweens = echoes.map((el, i) => {
+    const d = 0.18 + i * 0.04;
+    return {
+      x: gsap.quickTo(el, "x", { duration: d, ease: "power3" }),
+      y: gsap.quickTo(el, "y", { duration: d, ease: "power3" }),
+    };
+  });
+
   window.addEventListener("mousemove", (e) => {
     xTo(e.clientX);
     yTo(e.clientY);
+    for (const tw of echoTweens) {
+      tw.x(e.clientX);
+      tw.y(e.clientY);
+    }
   });
 }
 
