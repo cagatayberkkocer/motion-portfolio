@@ -169,9 +169,10 @@ function initCursor() {
   const cursor = document.querySelector(".cursor");
   if (!cursor) return;
 
-  // 12 trailing echoes, each shrinking by 1.2× from the previous
+  // 12 trailing echoes — taper from 12px down to 10px (1.2× total shrink)
   const ECHO_COUNT = 12;
-  const BASE_SIZE = 12; // px — matches main cursor
+  const BASE_SIZE = 12;
+  const END_SIZE = BASE_SIZE / 1.2; // 10px
   const echoes = [];
 
   for (let i = 0; i < ECHO_COUNT; i++) {
@@ -179,13 +180,12 @@ function initCursor() {
     el.className = "cursor-echo";
     el.setAttribute("aria-hidden", "true");
 
-    const size = BASE_SIZE / Math.pow(1.2, i + 1);
+    const t = (i + 1) / ECHO_COUNT; // 0.08 → 1.0
+    const size = BASE_SIZE - (BASE_SIZE - END_SIZE) * t;
     el.style.width = size + "px";
     el.style.height = size + "px";
-
-    const t = (i + 1) / ECHO_COUNT;
-    el.style.opacity = 0.6 - t * 0.5;
-    el.style.filter = `blur(${t * 4}px)`;
+    el.style.opacity = 0.7 - t * 0.5;
+    el.style.filter = `blur(${t * 2}px)`;
 
     document.body.appendChild(el);
     echoes.push(el);
@@ -196,8 +196,9 @@ function initCursor() {
   const xTo = gsap.quickTo(cursor, "x", { duration: 0.15, ease: "power3" });
   const yTo = gsap.quickTo(cursor, "y", { duration: 0.15, ease: "power3" });
 
+  // Wider duration spread so the trail fans out visibly
   const echoTweens = echoes.map((el, i) => {
-    const d = 0.18 + i * 0.04;
+    const d = 0.2 + i * 0.06;
     return {
       x: gsap.quickTo(el, "x", { duration: d, ease: "power3" }),
       y: gsap.quickTo(el, "y", { duration: d, ease: "power3" }),
