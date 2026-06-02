@@ -22,10 +22,12 @@ body {
 }
 
 .grid-label {
-  margin: 16px 0 0 0;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  margin: 0 0 24px 0;
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   text-align: left;
   color: #0a0a0b;
+  line-height: 1;
 }
